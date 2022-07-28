@@ -43,9 +43,9 @@ main {
 .die {
   display: grid;
   grid-template-areas:
-    "a . c"
-    "e g f"
-    "d . b";
+    "a . b"
+    "c d e"
+    "f . g";
   height: 80px;
   width: 80px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
@@ -62,23 +62,47 @@ main {
   border-radius: 50%;
 }
 
+/*
+  Die grid algorithm:
+
+  Die1: Single pip centre
+        1(odd and last) = d
+
+  Die2: Two pips top left and bottom right
+        1 = a and 2(!odd) = g
+
+  Die3: Three pips top left, centre, bottom right
+        1 = a and 2 = g and 3(odd and last) = d
+
+  Die4: Four pips top left, top right, bottom left, bottom right
+        1 = a and 2 = g and 3 = b and 4(!odd) = f
+        
+  Die5: Five pips top left, top right, center, bottom left, bottom right;
+        1 = a and 2 = g and 3 = b and 4 = f and 5(odd and last) = d
+
+  Die6: Six pips top left, top right, middle left, middle right, bottom left, bottom right
+        1 = a and 2 = g and 3 = b and 4 = f and 5 = c and 6(!odd) = e
+*/
+.pip:nth-child(1) {
+  grid-area: a;
+}
 .pip:nth-child(2) {
-  grid-area: b;
+  grid-area: g;
 }
 .pip:nth-child(3) {
-  grid-area: c;
+  grid-area: b;
 }
 .pip:nth-child(4) {
-  grid-area: d;
-}
-.pip:nth-child(5) {
-  grid-area: e;
-}
-.pip:nth-child(6) {
   grid-area: f;
 }
-.pip:nth-child(odd):last-child {
-  grid-area: g;
+.pip:nth-child(5) {
+  grid-area: c;
+}
+.pip:nth-child(6) {
+  grid-area: e;
+}
+.pip:nth-child(odd):last-child { /* only if odd (1, 3, 5) AND the last (or singular) pip  */
+  grid-area: d;
 }
 
 .roll-dice {
