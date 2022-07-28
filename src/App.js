@@ -17,7 +17,7 @@ export default function App() {
     if (allHeld && allSameValue) {
       setTenzies(true);
       const end = new Date().getTime();
-      setTimer(start => (end - start) / 1000);
+      setTimer((start) => (end - start) / 1000);
     }
   }, [dice]); // will run every time the dependencies change ([dice])
 

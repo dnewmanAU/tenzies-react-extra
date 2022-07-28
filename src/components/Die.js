@@ -6,15 +6,21 @@ export default function Die(props) {
     backgroundColor: props.isHeld ? "black" : "white",
   };
   // CSS-in-JS
-  const pipsColor = {
-    color: props.isHeld ? "white" : "black",
+  const pipsColour = {
+    backgroundColor: props.isHeld ? "white" : "black",
   };
 
-  return (
-    <div className="die-face" style={dieColour} onClick={props.holdDice}>
-      <h2 className="die-num" style={pipsColor}>
-        {props.value}
-      </h2>
-    </div>
-  );
+  function die(value) {
+    const pips = [];
+    for (var i = 0; i < value; i++) {
+      pips.push(<span className="pip" style={pipsColour}></span>);
+    }
+    return (
+      <div className="die" style={dieColour} onClick={props.holdDice}>
+        {pips}
+      </div>
+    );
+  }
+
+  return die(props.value);
 }
