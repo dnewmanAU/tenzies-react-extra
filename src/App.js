@@ -8,7 +8,7 @@ import Confetti from "react-confetti";
 
 export default function App() {
   const [start, setStart] = useState(false);
-  const [timer, setTimer] = useState(new Date().getTime());
+  const [timeMs, setTimeMs] = useState(0);
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
 
@@ -18,8 +18,6 @@ export default function App() {
     const allSameValue = dice.every((die) => die.value === firstValue);
     if (allHeld && allSameValue) {
       setTenzies(true);
-      const end = new Date().getTime();
-      setTimer((start) => ((end - start) / 1000).toFixed(2));
     }
   }, [dice]); // will run every time the dependencies change ([dice])
 
@@ -50,7 +48,6 @@ export default function App() {
     } else {
       setTenzies(false);
       setDice(allNewDice());
-      setTimer(new Date().getTime());
     }
   }
 
@@ -83,7 +80,16 @@ export default function App() {
       <button className="roll-dice" onClick={rollDice}>
         {tenzies ? "New Game" : start ? "Roll Dice" : "Start Game"}
       </button>
-      {tenzies ? <h2>You took {timer} seconds!</h2> : start ? <Stopwatch start={start} /> : <div />}
+      {tenzies ? (
+        <h2>
+          You took {Math.floor((timeMs / 1000) % 60)}.{(timeMs / 10) % 100}{" "}
+          seconds!
+        </h2>
+      ) : start ? (
+        <Stopwatch start={start} timeMs={timeMs} setTimeMs={setTimeMs} />
+      ) : (
+        <div />
+      )}
     </main>
   );
 }

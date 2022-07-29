@@ -1,43 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export default function Stopwatch(props) {
-  const [timeMs, setTimeMs] = useState(0);
-  const [timeSec, setTimeSec] = useState(0);
-  const [timeMin, setTimeMin] = useState(0);
-
   useEffect(() => {
-    let intervalId;
+    let interval;
     if (props.start) {
-      intervalId = setInterval(() => {
-        setTimeMs((prevTimeMs) => {
-          return prevTimeMs + 10;
-        });
-        if (timeMs === 1000) {
-          setTimeSec((prevTimeSec) => {
-            return prevTimeSec + 1;
-          });
-          setTimeMs(0);
-        }
-        if (timeSec === 60) {
-          setTimeMin((prevTimeMin) => {
-            return prevTimeMin + 1;
-          });
-          setTimeSec(0);
-        }
+      interval = setInterval(() => {
+        props.setTimeMs((prevTimeMs) => prevTimeMs + 10);
       }, 10);
-    } else if (!props.start) {
-      clearInterval(intervalId);
+    } else {
+      clearInterval(interval);
     }
-    return () => clearInterval(intervalId);
-  }, [timeMs, timeSec, timeMin, props.start]);
+    return () => {
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.start]); // true
+
+  function formatTime(type) {
+    if (type === "ms") {
+      return (props.timeMs / 10) % 100;
+    } else if (type === "sec") {
+      return Math.floor((props.timeMs / 1000) % 60);
+    } else if (type === "min") {
+      return Math.floor((props.timeMs / 60000) % 60);
+    }
+  }
 
   return (
     <div className="stopwatch">
-      <div className="numbers">
-        <span>{timeMin} minutes </span>
-        <span>{timeSec} seconds </span>
-        <span>{timeMs} milliseconds </span>
-      </div>
+      <span>
+        {formatTime("min") >= 10 ? formatTime("min") : "0" + formatTime("min")}:
+      </span>
+      <span>
+        {formatTime("sec") >= 10 ? formatTime("sec") : "0" + formatTime("sec")}:
+      </span>
+      <span>
+        {formatTime("ms") >= 10 ? formatTime("ms") : "0" + formatTime("ms")}
+      </span>
     </div>
   );
 }
