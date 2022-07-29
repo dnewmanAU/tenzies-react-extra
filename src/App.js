@@ -2,10 +2,12 @@ import "./App.css";
 
 import React, { useState, useEffect } from "react";
 import Die from "./components/Die";
+import Stopwatch from "./components/Stopwatch";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 
 export default function App() {
+  const [start, setStart] = useState(false);
   const [timer, setTimer] = useState(new Date().getTime());
   const [dice, setDice] = useState(allNewDice());
   const [tenzies, setTenzies] = useState(false);
@@ -17,7 +19,7 @@ export default function App() {
     if (allHeld && allSameValue) {
       setTenzies(true);
       const end = new Date().getTime();
-      setTimer((start) => (end - start) / 1000);
+      setTimer((start) => ((end - start) / 1000).toFixed(2));
     }
   }, [dice]); // will run every time the dependencies change ([dice])
 
@@ -39,6 +41,7 @@ export default function App() {
 
   function rollDice() {
     if (!tenzies) {
+      setStart(true);
       setDice((oldDice) =>
         oldDice.map((die) => {
           return die.isHeld ? die : generateNewDie();
@@ -78,9 +81,9 @@ export default function App() {
       </p>
       <div className="dice-container">{diceElements}</div>
       <button className="roll-dice" onClick={rollDice}>
-        {tenzies ? "New Game" : "Roll"}
+        {tenzies ? "New Game" : start ? "Roll Dice" : "Start Game"}
       </button>
-      {tenzies && <h2>You took {timer} seconds!</h2>}
+      {tenzies ? <h2>You took {timer} seconds!</h2> : start ? <Stopwatch start={start} /> : <div />}
     </main>
   );
 }
