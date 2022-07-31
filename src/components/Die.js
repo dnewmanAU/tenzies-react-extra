@@ -16,7 +16,7 @@ export default function Die(props) {
       pips.push(<span className="pip" style={pipsColour}></span>);
     }
     return (
-      <div className="die" style={dieColour} onClick={props.holdDice}>
+      <div className="die" style={dieColour} onClick={props.start && props.holdDice}>
         {pips}
       </div>
     );

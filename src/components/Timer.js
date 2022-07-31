@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export default function Stopwatch(props) {
+export default function Timer(props) {
   useEffect(() => {
     let interval;
     if (props.start) {
@@ -27,7 +27,7 @@ export default function Stopwatch(props) {
   }
 
   return (
-    <div className="stopwatch">
+    <div className="timer">
       <span>
         {formatTime("min") >= 10 ? formatTime("min") : "0" + formatTime("min")}:
       </span>

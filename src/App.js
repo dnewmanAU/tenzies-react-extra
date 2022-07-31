@@ -2,7 +2,7 @@ import "./App.css";
 
 import React, { useState, useEffect } from "react";
 import Die from "./components/Die";
-import Stopwatch from "./components/Stopwatch";
+import Timer from "./components/Timer";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 
@@ -39,12 +39,15 @@ export default function App() {
 
   function rollDice() {
     if (!tenzies) {
-      setStart(true);
-      setDice((oldDice) =>
-        oldDice.map((die) => {
-          return die.isHeld ? die : generateNewDie();
-        })
-      );
+      if (!start) {
+        setStart(true);
+      } else {
+        setDice((oldDice) =>
+          oldDice.map((die) => {
+            return die.isHeld ? die : generateNewDie();
+          })
+        );
+      }
     } else {
       setTenzies(false);
       setDice(allNewDice());
@@ -65,6 +68,7 @@ export default function App() {
       value={die.value}
       isHeld={die.isHeld}
       holdDice={() => holdDice(die.id)}
+      start={start}
     />
   ));
 
@@ -86,7 +90,7 @@ export default function App() {
           seconds!
         </h2>
       ) : start ? (
-        <Stopwatch start={start} timeMs={timeMs} setTimeMs={setTimeMs} />
+        <Timer start={start} timeMs={timeMs} setTimeMs={setTimeMs} />
       ) : (
         <div />
       )}
