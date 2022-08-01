@@ -9,11 +9,16 @@ body {
   font-family: "Karla", sans-serif;
 }
 
-main {
-  background-color: #f5f5f5;
-  height: 400px;
-  max-width: 800px;
+.main-container {
+  display: flex;
+  justify-content: center;
   border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+.play-area {
+  height: 500px;
+  max-width: 800px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -101,28 +106,42 @@ main {
 .pip:nth-child(6) {
   grid-area: e;
 }
-.pip:nth-child(odd):last-child { /* only if odd (1, 3, 5) AND the last (or singular) pip  */
+.pip:nth-child(odd):last-child {
+  /* only if odd (1, 3, 5) AND the last (or singular) pip  */
   grid-area: d;
 }
 
-.roll-dice {
+.roll-button {
   height: 50px;
   width: 150px;
   border: none;
   border-radius: 6px;
-  background-color: #5035ff;
-  color: white;
+  background-color: white;
+  color: black;
   font-size: 1.2rem;
   font-family: "Karla", sans-serif;
   cursor: pointer;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 }
 
-.roll-dice:focus {
-  outline: none;
+.roll-button:hover {
+  background-color: black;
+  color: white;
 }
 
-.roll-dice:active {
+.roll-button:active {
+  background-color: white;
+  color: black;
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.stats-container {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .timer {
@@ -131,4 +150,46 @@ main {
   font-size: 40px;
   font-family: "Roboto Mono", monospace;
   padding: 10px 0 10px 0;
+}
+
+.rolls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.rolls-text {
+  font-family: "Karla", sans-serif;
+  font-size: 25px;
+}
+
+.roll-count {
+  margin-left: 20px;
+  font-size: 40px;
+  font-family: "Roboto Mono", monospace;
+}
+
+.scores-button {
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 6px;
+  background-color: white;
+  color: black;
+  font-size: 1.35rem;
+  font-family: "Karla", sans-serif;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.scores-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.scores-button:active {
+  background-color: white;
+  color: black;
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
