@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 
 export default function Timer(props) {
+  /**
+   * 
+   */
   useEffect(() => {
     let interval;
     if (props.start) {
@@ -14,8 +17,13 @@ export default function Timer(props) {
       clearInterval(interval);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.start]); // true
+  }, [props.start]);
 
+  /**
+   * Formats milliseconds passed into a readable format
+   * @param {string} type Type of time to format (ms, sec, min)
+   * @returns 
+   */
   function formatTime(type) {
     if (type === "ms") {
       return (props.timeMs / 10) % 100;
