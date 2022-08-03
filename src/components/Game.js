@@ -20,22 +20,13 @@ export default function Game() {
   useEffect(() => {
     const data = localStorage.getItem("highScores");
     if (data === null) {
-        localStorage.setItem("highScores", JSON.stringify([]));
+      localStorage.setItem("highScores", JSON.stringify([]));
     }
+    localStorage.setItem("sortType", "time");
   }, []);
 
   /**
-   * Check if the game is won
-   * If it has been won, add a high score
-   */
-  useEffect(() => {
-    if (tenzies) {
-        scoreToStorage();
-    }
-  });
-
-  /**
-   * 
+   *
    */
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -44,12 +35,14 @@ export default function Game() {
     if (allHeld && allSameValue) {
       setTenzies(true);
       setStart(false);
+      scoreToStorage();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dice]); // will run every time the dependencies change ([dice])
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   function generateNewDie() {
     return {
@@ -60,19 +53,19 @@ export default function Game() {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   function allNewDice() {
     const newDice = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 2; i++) {
       newDice.push(generateNewDie());
     }
     return newDice;
   }
 
   /**
-   * 
+   *
    */
   function rollDice() {
     if (!tenzies) {
@@ -89,7 +82,7 @@ export default function Game() {
           })
         );
       }
-    } else {  
+    } else {
       setTenzies(false);
       setStart(true);
       setTimeMs(0);
@@ -104,18 +97,20 @@ export default function Game() {
    */
   function generateHighScore() {
     return {
-        rolls: rollCount,
-        time: Math.floor((timeMs / 1000) % 60) + "." + (timeMs / 10) % 100,
-    }
+      rolls: rollCount,
+      time: Math.floor((timeMs / 1000) % 60) + "." + ((timeMs / 10) % 100),
+    };
   }
 
   /**
    * Stores the high score to local storage that persists between games and refreshes
    */
   function scoreToStorage() {
-    const data = JSON.parse(localStorage.getItem("highScores" || []));
-    data.push(generateHighScore());
-    localStorage.setItem("highScores", JSON.stringify(data));
+    const scores = JSON.parse(localStorage.getItem("highScores" || []));
+    scores.push(generateHighScore());
+    scores.sort((a, b) => a.time - b.time); // sort by time in ascending order
+    localStorage.setItem("highScores", JSON.stringify(scores));
+    localStorage.setItem("sortType", "time");
   }
 
   /**
@@ -129,10 +124,10 @@ export default function Game() {
       })
     );
   }
-  
+
   /**
    * Array of custom die components with attributes
-   * 
+   *
    * key = unique die identifier
    * value = the die face value from 1 to 6
    * isHeld = boolean for the user clicking the die
@@ -159,7 +154,7 @@ export default function Game() {
           current value between rolls.
         </p>
         <div className="dice-container">{diceElements}</div>
-        <button className="roll-button" onClick={rollDice}>
+        <button className="button" onClick={rollDice}>
           {tenzies ? "New Game" : start ? "Roll Dice" : "Start Game"}
         </button>
       </main>
@@ -178,7 +173,7 @@ export default function Game() {
           <h2 className="roll-count">{rollCount}</h2>
         </div>
         <Link to="/history">
-          <button className="scores-button">{"High Scores"}</button>
+          <button className="button">{"High Scores"}</button>
         </Link>
       </div>
     </div>

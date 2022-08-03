@@ -110,7 +110,7 @@ body {
   grid-area: d;
 }
 
-.roll-button {
+.button {
   height: 50px;
   width: 150px;
   border: none;
@@ -124,12 +124,12 @@ body {
   border-radius: 10px;
 }
 
-.roll-button:hover {
+.button:hover {
   background-color: black;
   color: white;
 }
 
-.roll-button:active {
+.button:active {
   background-color: white;
   color: black;
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
@@ -168,27 +168,35 @@ body {
   font-family: "Roboto Mono", monospace;
 }
 
-.scores-button {
-  height: 50px;
-  width: 150px;
-  border: none;
-  border-radius: 6px;
-  background-color: white;
-  color: black;
-  font-size: 1.35rem;
-  font-family: "Karla", sans-serif;
-  cursor: pointer;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
+.history-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  background-color: #f5f5f5;
 }
 
-.scores-button:hover {
-  background-color: black;
-  color: white;
+.history-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 20px 30px 20px 30px;
 }
 
-.scores-button:active {
-  background-color: white;
-  color: black;
-  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+.scores-title {
+  font-size: 32px;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.scores-container {
+  margin: auto;
+  text-align: center;
+}
+
+.scores {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }

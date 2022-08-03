@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 export default function Timer(props) {
   /**
-   * 
+   *
    */
   useEffect(() => {
     let interval;
@@ -22,7 +22,7 @@ export default function Timer(props) {
   /**
    * Formats milliseconds passed into a readable format
    * @param {string} type Type of time to format (ms, sec, min)
-   * @returns 
+   * @returns
    */
   function formatTime(type) {
     if (type === "ms") {
