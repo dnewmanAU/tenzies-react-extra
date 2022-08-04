@@ -1,11 +1,9 @@
 import React from "react";
 
 export default function Die(props) {
-  // CSS-in-JS
   const dieColour = {
     backgroundColor: props.isHeld ? "black" : "white",
   };
-  // CSS-in-JS
   const pipsColour = {
     backgroundColor: props.isHeld ? "white" : "black",
   };

@@ -1,5 +1,5 @@
 import Game from "./components/Game.js";
-import History from "./components/History.js";
+import HighScores from "./components/HighScores.js";
 import "./App.css";
 
 import React from "react";
@@ -10,7 +10,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Game />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/highscores" element={<HighScores />} />
       </Routes>
     </BrowserRouter>
   );

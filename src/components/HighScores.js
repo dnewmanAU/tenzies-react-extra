@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Score from "./Score";
 
-export default function History() {
+export default function HighScores() {
   const data = JSON.parse(localStorage.getItem("highScores" || []));
+  
   const [sortType, setSortType] = useState(() => {
     if (localStorage.getItem("sortType") === "time") {
       return "rolls";
@@ -11,37 +12,35 @@ export default function History() {
       return "time";
     }
   });
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
 
-  useEffect(() => {
-    const data = localStorage.getItem("highScores");
-    if (data === null) {
-      localStorage.setItem("highScores", JSON.stringify([]));
+  const [highScores, setHighScores] = useState(() => {
+    if (data !== null) {
+      return data;
+    } else {
+      return [];
     }
-    localStorage.setItem("sortType", "time");
-  }, []);
+  });
 
   function sortScores() {
     if (sortType === "time") {
-      const scores = JSON.parse(localStorage.getItem("highScores" || []));
-      scores.sort((a, b) => a.rolls - b.rolls);
-      localStorage.setItem("highScores", JSON.stringify(scores));
+      //const scores = JSON.parse(localStorage.getItem("highScores" || []));
+      setHighScores(highScores.sort((a, b) => a.rolls - b.rolls));
+      setSortType("rolls"); // change sort next time
+      localStorage.setItem("highScores", JSON.stringify(highScores));
       localStorage.setItem("sortType", "rolls");
-      setSortType("rolls");
     } else if (sortType === "rolls") {
-      const scores = JSON.parse(localStorage.getItem("highScores" || []));
-      scores.sort((a, b) => a.time - b.time);
-      localStorage.setItem("highScores", JSON.stringify(scores));
-      localStorage.setItem("sortType", "time");
+      //const scores = JSON.parse(localStorage.getItem("highScores" || []));
+      setHighScores(highScores.sort((a, b) => a.time - b.time));
       setSortType("time");
+      localStorage.setItem("highScores", JSON.stringify(highScores));
+      localStorage.setItem("sortType", "time");
     }
   }
 
   function clearScores() {
     localStorage.clear();
     localStorage.setItem("highScores", JSON.stringify([]));
-    forceUpdate();
+    setHighScores(JSON.parse(localStorage.getItem("highScores" || [])));
   }
 
   const scores = data.map((score, index) => (
@@ -49,8 +48,8 @@ export default function History() {
   ));
 
   return (
-    <div className="history-container">
-      <div className="history-buttons">
+    <div className="highscores-container">
+      <div className="highscores-buttons">
         <Link to="/">
           <button className="button">{"Back"}</button>
         </Link>

@@ -14,7 +14,7 @@ export default function Game() {
 
   /**
    * On first render check if highScores exists in local storage
-   * If it doesn't create an empty local storage array to house generated scores
+   * If not, create an empty local storage array to house generated scores
    * Otherwise do nothing
    */
   useEffect(() => {
@@ -26,7 +26,8 @@ export default function Game() {
   }, []);
 
   /**
-   *
+   * Runs everytime dice dependency changes to see if the game is won
+   * Every dice must be held and every dice value must be the same
    */
   useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);
@@ -41,8 +42,9 @@ export default function Game() {
   }, [dice]); // will run every time the dependencies change ([dice])
 
   /**
-   *
-   * @returns
+   * Generates a random die from 1 to 6 with a unique identifier via nanoid
+   * Every die defaults to not being held
+   * @returns the generated die with attributes
    */
   function generateNewDie() {
     return {
@@ -53,8 +55,9 @@ export default function Game() {
   }
 
   /**
-   *
-   * @returns
+   * Generates a set of 10 new die
+   * Only called when a new game starts
+   * @returns an array with 10 die from the generateNewDie function
    */
   function allNewDice() {
     const newDice = [];
@@ -65,7 +68,9 @@ export default function Game() {
   }
 
   /**
-   *
+   * Called everytime the rollDice button is clicked and the main logic is executed
+   * Sets the game status to started, increments the roll counter, generates new die for unheld dice
+   * If the game is won it will setup a new game with new dice and reset time and roll count
    */
   function rollDice() {
     if (!tenzies) {
@@ -78,6 +83,7 @@ export default function Game() {
         });
         setDice((oldDice) =>
           oldDice.map((die) => {
+            // if die is held (true) just return the die, otherwise get a new one
             return die.isHeld ? die : generateNewDie();
           })
         );
@@ -172,7 +178,7 @@ export default function Game() {
           <h5 className="rolls-text">Rolls:</h5>
           <h2 className="roll-count">{rollCount}</h2>
         </div>
-        <Link to="/history">
+        <Link to="/highscores">
           <button className="button">{"High Scores"}</button>
         </Link>
       </div>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 export default function Timer(props) {
   /**
-   *
+   * Increments timer tracking state every 10ms by 10ms
    */
   useEffect(() => {
     let interval;
@@ -20,9 +20,9 @@ export default function Timer(props) {
   }, [props.start]);
 
   /**
-   * Formats milliseconds passed into a readable format
+   * Formats total milliseconds into a readable format
    * @param {string} type Type of time to format (ms, sec, min)
-   * @returns
+   * @returns the formatted time depending on the type
    */
   function formatTime(type) {
     if (type === "ms") {
