@@ -22,7 +22,6 @@ export default function Game() {
     if (data === null) {
       localStorage.setItem("highScores", JSON.stringify([]));
     }
-    localStorage.setItem("sortType", "time");
   }, []);
 
   /**
@@ -61,7 +60,7 @@ export default function Game() {
    */
   function allNewDice() {
     const newDice = [];
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 10; i++) {
       newDice.push(generateNewDie());
     }
     return newDice;
@@ -114,9 +113,7 @@ export default function Game() {
   function scoreToStorage() {
     const scores = JSON.parse(localStorage.getItem("highScores" || []));
     scores.push(generateHighScore());
-    scores.sort((a, b) => a.time - b.time); // sort by time in ascending order
     localStorage.setItem("highScores", JSON.stringify(scores));
-    localStorage.setItem("sortType", "time");
   }
 
   /**
