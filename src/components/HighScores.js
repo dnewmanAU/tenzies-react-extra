@@ -49,7 +49,7 @@ export default function HighScores() {
     <div className="highscores-container">
       <div className="highscores-buttons">
         <Link to="/">
-          <button className="button" onClick={console.log("going back")}>
+          <button className="button">
             {"Back"}
           </button>
         </Link>
